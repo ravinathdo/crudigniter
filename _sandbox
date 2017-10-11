@@ -1,0 +1,24 @@
+1. applicaton>config>database.php
+        'username' => 'root',
+        'password' => '123',
+        'database' => 'crudigniter_db',
+
+2. applicaton>config>autoload.php
+        $autoload['libraries'] = array('database','form_validation','session');
+        $autoload['helper'] = array('url');
+
+3. applicaton>config>config.php
+        $config['base_url'] = 'http://localhost/crudigniter/';
+        $config['index_page'] = '';
+
+4. remove index.php codeigniter 3
+    4.1 Created the .htaccess in the root folder of the project with the content:
+
+        RewriteEngine on
+        RewriteCond %{REQUEST_FILENAME} !-f
+        RewriteCond %{REQUEST_FILENAME} !-d
+        RewriteCond $1 !^(index\.php|css|js|images|robots\.txt)
+        RewriteRule ^(.*)$ index.php?$1 [L]
+
+    4.2 applicaton>config>config.php
+        $config['url_suffix'] = '';
