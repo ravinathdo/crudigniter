@@ -10,6 +10,6 @@ and open the template in the editor.
         <title></title>
     </head>
     <body>
-       Magazine Created
+       Magazine Created #<?=$issue_id?>
     </body>
 </html>

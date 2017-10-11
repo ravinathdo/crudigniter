@@ -16,7 +16,7 @@ class Magazine extends CI_Controller {
     //put your code here
 
     public function index() {
-        /*
+        /* stage-1
           $this->load->model('Publication');
           $this->Publication->publication_name = 'Sandy Show';
           $this->Publication->save();
@@ -35,6 +35,11 @@ class Magazine extends CI_Controller {
          */
 
 
+
+
+
+
+        /* stage-2 
         $data = array();
         $this->load->model('Publication');
         $publication = new Publication();
@@ -48,7 +53,39 @@ class Magazine extends CI_Controller {
         $data['issue'] = $issue;
 
         $this->load->view('magazine', $data);
+        */
+        
+        
+        
+        
+        /* stage-3 */
+        $this->load->library('table');
+        $this->load->model(array('Issue','Publication'));
+        $publication = new Publication();
+        $issues = $this->Issue->get();
+
+        
+        //retreaving the object array
+        foreach ($issues as $issue) {
+          $publication = new Publication();  
+          
+//          echo '<hr>';
+//          echo '<tt><pre>'.var_export($issue, TRUE).'</pre></tt>';
+//          echo '<hr>';
+          
+          $publication->load($issue->publication_id);
+          $magazines[] = array(
+              $publication->publication_name,
+              $issue->issue_number,
+              $issue->issue_date_publication,
+          );
+        }
+                
+        echo '<tt><pre>'.var_export($magazines, TRUE).'</pre></tt>';
+        $this->load->view('magazines', array('magazines'=>$magazines));
     }
+    
+    
 
     public function add() {
         //populate Publication Model
@@ -89,12 +126,16 @@ class Magazine extends CI_Controller {
         } else {
 
 //-------------collect the input and store
-
+            $this->load->model('Issue');
+            $issue = new Issue();
+            $issue->publication_id = $this->input->post('publication_id');
+            $issue->issue_number = $this->input->post('issue_number');
+            $issue->issue_date_publication = $this->input->post('issue_date_publication');
+//            echo '<tt><pre>'.var_export($issue, TRUE).'</pre></tt>';
+            $issue->save();
 //-------------//collect the input and store
 
-
-
-            $this->load->view('magazine_form_success');
+            $this->load->view('magazine_form_success', array('issue_id' => $issue->issue_id));
         }
         //---------//form validation
     }

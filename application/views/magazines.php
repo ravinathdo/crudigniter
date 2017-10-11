@@ -12,7 +12,8 @@ and open the template in the editor.
     <body>
         <h2>Magazines</h2>
         <?php
-        // put your code here
+       $this->table->set_heading('Publication','Issue','Date');
+       echo $this->table->generate($magazines);
         ?>
     </body>
 </html>
