@@ -55,16 +55,15 @@ class Magazine extends CI_Controller {
         $this->load->model('Publication');
         $publications = $this->Publication->get();
 
-        echo '<tt><pre>' . var_export($publications, TRUE) . '</pre></tt>';
-
 
         $publication_form_option = array();
         foreach ($publications as $id => $publication) {
             $publication_form_option[$id] = $publication->publication_name;
         }
 
-        echo '<tt><pre>' . var_export($publication_form_option, TRUE) . '</pre></tt>';
 
+
+//---------form validation
         $this->load->library('form_validation');
         $this->form_validation->set_rules(array(
             array(
@@ -83,24 +82,30 @@ class Magazine extends CI_Controller {
                 'rules' => 'required|callback_date_validation', //custome call back function
             ),
         ));
-
         $this->form_validation->set_error_delimiters('<p style="color:red">', '</p>');
         if (!$this->form_validation->run()) {
             $this->load->view('magazine_form', array('publication_form_options' => $publication_form_option
             ));
         } else {
+
+//-------------collect the input and store
+
+//-------------//collect the input and store
+
+
+
             $this->load->view('magazine_form_success');
         }
+        //---------//form validation
     }
-    
-    
+
     public function date_validation($input) {
         $test_date = explode("-", $input);
-        if(!@checkdate($test_date[0], $test_date[1], $test_date[2])){
-            $this->form_validation->set_message('date_validation','date must YYYY-MM-DD');
+        if (!@checkdate($test_date[2], $test_date[1], $test_date[0])) {
+            $this->form_validation->set_message('date_validation', 'date must YYYY-MM-DD');
             return FALSE;
         }
-            return TRUE;
+        return TRUE;
     }
 
 }

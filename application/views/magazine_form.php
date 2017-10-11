@@ -1,4 +1,5 @@
-<form method="post">
+<?php echo validation_errors();?>
+<form method="post" action="">
     <div>
         <label for="publication_id">Publication Name</label>
         <select name="publication_id">
@@ -11,7 +12,7 @@
     </div>
     <div>
         <label for="issue_number">Issue Number</label>
-        <input type="text" name="issue_name" value=""/>
+        <input type="text" name="issue_number" value=""/>
     </div>
     <div>
         <label for="issue_number">Issue Date</label>
